@@ -90,3 +90,7 @@ notification_no_shelves = '''
 📁 id: {book_type_id}
 Вернуть до: <b>{date_return:%d.%m.%Y}</b>
 Куда: <b>{location_name}</b>'''
+
+
+book_extended = '''
+Книга продлена до {date_return:%d.%m.%Y} (2 недели)'''

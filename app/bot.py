@@ -3,6 +3,7 @@ from config import settings
 import asyncio
 from app.handlers import rt
 from config import settings
+from app.notifications import daily_notification
 
 
 async def start_bot_async():
@@ -11,10 +12,12 @@ async def start_bot_async():
 
     dp.include_router(rt)
 
+    asyncio.create_task(daily_notification(bot))
     await dp.start_polling(bot)
 
 
 def start_bot():
+
     asyncio.run(start_bot_async())
 
 

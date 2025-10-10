@@ -45,7 +45,8 @@ async def insert_data():
             models.BookTypeORM(book_name="Война и мир Том 5", author="Лев Толстой", positions=[
                 models.BookORM(book_type_id=1, location_id=1, shelf=1, row=1),
                 models.BookORM(book_type_id=1, location_id=1, shelf=2, row=2),
-            ])])
+            ])
+        ])
         await session.commit()
 
 
@@ -271,8 +272,8 @@ async def get_notifications_data():
             .join(models.BookORM.book)
             .join(models.BookORM.location)
             .join(models.ToReturnORM.user)
-            .where(models.ToReturnORM.date_return >= datetime.now())
+            .where(models.ToReturnORM.date_return <= datetime.now())
         )
         result = await session.execute(stmt)
-        users = result.scalars().all()
+        users = result.all()
         return list(map(m.NotificationData.model_validate, users)) if users else None

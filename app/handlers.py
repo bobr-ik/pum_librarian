@@ -146,7 +146,7 @@ async def select_shelf(callback: CallbackQuery, state: FSMContext, callback_data
         location: m.Location = f.find_location(callback_data.location_id, book)
     else:
         location: m.Location = await state.get_value('location')
-    date = datetime.now()
+    date = datetime.now() - timedelta(days=15)
     await orm.select_book(book.book_type_id, location.location_id, shelf, row, callback.from_user.id, callback.from_user.username, date)
     await state.clear()
 
@@ -276,4 +276,4 @@ async def return_book(callback: CallbackQuery, state: FSMContext):
 async def extend_book(callback: CallbackQuery, state: FSMContext):
     await callback.answer()
     await orm.extend_book(await state.get_value('book_id'), callback.from_user.id)
-    await callback.message.edit_text(text=f'Книга продлена до {datetime.now() + timedelta(days=14)} (2 недели)', reply_markup=kb.back_keyboard)
+    await callback.message.edit_text(text=p.book_extended.format(date_return=datetime.now() + timedelta(days=14)), reply_markup=kb.back_keyboard)
