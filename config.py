@@ -9,6 +9,7 @@ print(f"{BASE_DIR}/.env")
 class Settings(BaseSettings):
     db_url: str = Field(default=f'sqlite+aiosqlite:///{BASE_DIR}/database/data.db', validate_default=False) # по этому адресу создатся файл с бд
     BOT_TOKEN: str
+    ADMIN_ID: list[int]
 
     @property
     def BOT(self):
